@@ -1,4 +1,4 @@
-package ficha3.v2;
+package ficha3.v3;
 
 import v2.Movie;
 import v2.Rental;
