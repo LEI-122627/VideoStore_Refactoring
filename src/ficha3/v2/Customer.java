@@ -1,59 +1,50 @@
 package ficha3.v2;
 
+import v2.Movie;
+import v2.Rental;
+
 import java.util.Vector;
 
-public class Customer
-{
+public class Customer {
 	private String _name;
-	private Vector<Rental> _rentals = new Vector<>();
+	private Vector<Rental> _rentals = new Vector<Rental>();
 
-	public Customer(String name)
-	{
+	public Customer(String name) {
 		_name = name;
 	}
 
-	public void addRental(Rental arg)
-	{
+	public void addRental(Rental arg) {
 		_rentals.addElement(arg);
 	}
 
-	public String getName()
-	{
+	public String getName() {
 		return _name;
 	}
 
-	// statement now delegates pricing and points to Rental and totals to helper methods
-	public String statement()
-	{
-		StringBuilder result = new StringBuilder("Rental Record for " + getName() + "\n");
+	public String statement() {
+		double totalAmount = 0;
+		int frequentRenterPoints = 0;
+		String result = "Rental Record for " + getName() + "\n";
 
 		for (Rental each : _rentals) {
+			double thisAmount = each.getAmount();
+
+			// add frequent renter points
+			frequentRenterPoints++;
+
+			// add bonus for a two day new release rental
+			if (each.getMovie().getPriceCode() == Movie.Code.NEW_RELEASE && each.getDaysRented() > 1) {
+				frequentRenterPoints++;
+			}
+
 			// show figures for this rental
-			result.append("\t").append(each.getMovie().getTitle()).append("\t").append(each.getCharge()).append("\n");
+			result += "\t" + each.getMovie().getTitle() + "\t" + thisAmount + "\n";
+			totalAmount += thisAmount;
 		}
 
 		// add footer lines
-		result.append("Amount owed is ").append(totalCharge()).append("\n");
-		result.append("You earned ").append(totalFrequentRenterPoints()).append(" frequent renter points\n");
-
-		return result.toString();
-	}
-
-	private double totalCharge()
-	{
-		double total = 0;
-		for (Rental each : _rentals) {
-			total += each.getCharge();
-		}
-		return total;
-	}
-
-	private int totalFrequentRenterPoints()
-	{
-		int points = 0;
-		for (Rental each : _rentals) {
-			points += each.getFrequentRenterPoints();
-		}
-		return points;
+		result += "Amount owed is " + totalAmount + "\n";
+		result += "You earned " + frequentRenterPoints + " frequent renter points";
+		return result;
 	}
 }

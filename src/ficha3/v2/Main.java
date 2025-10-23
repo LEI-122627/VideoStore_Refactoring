@@ -1,24 +1,24 @@
 package ficha3.v2;
 
+import v2.Movie;
+import v2.Rental;
+
 public class Main {
 	public static void main(String[] args) {
-		// Use Movie.Code enum values instead of ints
+		Customer customer = new Customer("John Doe");
+
 		Movie m1 = new Movie("The Matrix", Movie.Code.REGULAR);
 		Movie m2 = new Movie("Toy Story", Movie.Code.CHILDRENS);
 		Movie m3 = new Movie("Avengers: Endgame", Movie.Code.NEW_RELEASE);
 
-		// Create rentals (movie, daysRented)
-		Rental r1 = new Rental(m1, 3);
-		Rental r2 = new Rental(m2, 4);
-		Rental r3 = new Rental(m3, 1);
+		Rental r1 = new Rental(m1, 3); // regular, 3 days
+		Rental r2 = new Rental(m2, 4); // childrens, 4 days
+		Rental r3 = new Rental(m3, 2); // new release, 2 days (bonus point)
 
-		// Create customer and add rentals
-		Customer customer = new Customer("John Doe");
 		customer.addRental(r1);
 		customer.addRental(r2);
 		customer.addRental(r3);
 
-		// Print statement to verify changes
 		System.out.println(customer.statement());
 	}
 }
