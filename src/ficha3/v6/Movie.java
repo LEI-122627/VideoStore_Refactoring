@@ -1,4 +1,4 @@
-package ficha3.v5;
+package ficha3.v6;
 
 public class Movie {
 
