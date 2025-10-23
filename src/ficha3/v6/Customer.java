@@ -1,4 +1,4 @@
-package ficha3.v5;
+package ficha3.v6;
 
 import java.util.Vector;
 
@@ -23,14 +23,10 @@ public class Customer {
         String result = "Rental Record for " + getName() + "\n";
 
         for (Rental each : _rentals) {
-            // Direct call to getAmount() instead of using temp variable
-            double thisAmount = each.getAmount();
-
-            // Get frequent renter points from Rental (moved method)
+            double thisAmount = each.getAmount();  // Direct call to getAmount()
             result += "\t" + each.getMovie().getTitle() + "\t" + thisAmount + "\n";
         }
 
-        // Add footer lines
         result += "Amount owed is " + getTotalAmount() + "\n";
         result += "You earned " + getTotalFrequentRenterPoints() + " frequent renter points";
         return result;
@@ -52,5 +48,21 @@ public class Customer {
             frequentRenterPoints += each.getFrequentRenterPoints();
         }
         return frequentRenterPoints;
+    }
+
+    // New htmlStatement() method to generate the HTML formatted statement
+    public String htmlStatement() {
+        String result = "<h1>Rental Record for " + getName() + "</h1>\n";
+        result += "<ul>";
+
+        for (Rental each : _rentals) {
+            double thisAmount = each.getAmount();
+            result += "<li>" + each.getMovie().getTitle() + ": " + thisAmount + "</li>\n";
+        }
+
+        result += "</ul>\n";
+        result += "<p>Amount owed is <strong>" + getTotalAmount() + "</strong></p>\n";
+        result += "<p>You earned <strong>" + getTotalFrequentRenterPoints() + "</strong> frequent renter points</p>";
+        return result;
     }
 }
