@@ -3,7 +3,7 @@ package ficha3.v0;
 public class Rental
 {
 	private Movie _movie;
-	private int		_daysRented;
+	private int	_daysRented;
 
 	public Rental(Movie movie, int daysRented)
 	{
